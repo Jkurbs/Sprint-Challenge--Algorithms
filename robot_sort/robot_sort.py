@@ -93,21 +93,82 @@ class SortingRobot:
         return self._light == "ON"
 
     def sort(self):
-        """
-        Sort the robot's list.
-        """
-        # Fill this out
-        list = self._list
-        indexing_lenght = len(list) - 1 
-        sorted = False 
+        
+    # Turn  on to begin
+        self.set_light_on()
 
-        while not sorted: 
-            sorted = True 
-            for i in range(0, indexing_lenght): 
-                if list[i] > list[i+1]: 
-                    sorted = False 
-                    list[i], list[i+1] = list[i+1], list[i]
-        return list 
+        while self.light_is_on():
+            # if light is on turn off
+            self.set_light_off()
+
+            while self.can_move_right():
+                # If it can, move it to the right,
+                # Then compare and swap the next item to current, 
+                # Turn the light on.   
+                self.move_right()
+            
+                if self.compare_item() == 1:
+                    self.swap_item()
+                    self.set_light_on()
+
+
+            # Repeat 
+            while self.can_move_left():
+                self.swap_item()
+                self.move_left()
+
+                # Verify if it's equal to -1 (meaning the item value is lesser than, return -1)
+                if self.compare_item() == -1:
+                    self.swap_item()
+                    self.set_light_on()
+
+                self.move_right()
+                self.swap_item()
+                self.move_left()
+
+    # def sort(self):
+    #     """
+    #     Sort the robot's list.
+    #     """
+    #     # Fill this out
+
+    #     # Turn light on to begin
+    #     self.set_light_on()
+
+
+    #     # Verify if robot can move to the right 
+    #     while self.light_is_on(): 
+    #         self.set_light_off
+    #         while self.can_move_right(): 
+    #             # If it can, move it to the right,
+    #             # Then compare and swap the next item to current, 
+    #             # Turn the light on.
+    #             self.move_right()
+
+    #         if self.compare_item() == 1: 
+    #             # Swaping
+    #             self.swap_item()
+    #             self.set_light_on()
+
+    #         # Repeat step 1 
+    #         while self.can_move_left(): 
+    #             # If it can, move it to the right,
+    #             # Then compare and swap the next item to current, 
+    #             # Turn the light on.
+    #             self.swap_item()
+    #             self.move_left()
+
+    #         if self.compare_item() == -1: 
+    #             # Swaping
+    #             self.swap_item()
+    #             self.set_light_on()
+
+    #         self.move_right()
+    #         self.swap_item()
+    #         self.move_left()
+            
+
+       
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
